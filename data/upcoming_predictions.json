@@ -12,7 +12,7 @@
     "marketing_days": 730,
     "had_beta": 0,
     "price_usd": 70,
-    "proba_disappointment": 0.9504,
+    "proba_disappointment": 0.9427,
     "risk_level": "ALTO",
     "prediction": "\u26a0\ufe0f Riesgo de decepci\u00f3n"
   },
@@ -29,8 +29,8 @@
     "marketing_days": 540,
     "had_beta": 1,
     "price_usd": 60,
-    "proba_disappointment": 0.3559,
-    "risk_level": "BAJO",
+    "proba_disappointment": 0.2684,
+    "risk_level": "MUY BAJO",
     "prediction": "\u2705 Probablemente bueno"
   },
   {
@@ -46,9 +46,9 @@
     "marketing_days": 450,
     "had_beta": 0,
     "price_usd": 70,
-    "proba_disappointment": 0.5011,
-    "risk_level": "MODERADO",
-    "prediction": "\u26a0\ufe0f Riesgo de decepci\u00f3n"
+    "proba_disappointment": 0.4973,
+    "risk_level": "BAJO",
+    "prediction": "\u2705 Probablemente bueno"
   },
   {
     "name": "Borderlands 4",
@@ -63,7 +63,7 @@
     "marketing_days": 360,
     "had_beta": 0,
     "price_usd": 70,
-    "proba_disappointment": 0.8361,
+    "proba_disappointment": 0.8298,
     "risk_level": "ALTO",
     "prediction": "\u26a0\ufe0f Riesgo de decepci\u00f3n"
   },
@@ -80,7 +80,7 @@
     "marketing_days": 300,
     "had_beta": 0,
     "price_usd": 70,
-    "proba_disappointment": 0.9903,
+    "proba_disappointment": 0.9904,
     "risk_level": "ALTO",
     "prediction": "\u26a0\ufe0f Riesgo de decepci\u00f3n"
   },
@@ -97,7 +97,7 @@
     "marketing_days": 480,
     "had_beta": 0,
     "price_usd": 60,
-    "proba_disappointment": 0.8802,
+    "proba_disappointment": 0.8783,
     "risk_level": "ALTO",
     "prediction": "\u26a0\ufe0f Riesgo de decepci\u00f3n"
   },
@@ -114,7 +114,7 @@
     "marketing_days": 540,
     "had_beta": 0,
     "price_usd": 70,
-    "proba_disappointment": 0.7409,
+    "proba_disappointment": 0.7478,
     "risk_level": "MODERADO",
     "prediction": "\u26a0\ufe0f Riesgo de decepci\u00f3n"
   },
@@ -148,7 +148,7 @@
     "marketing_days": 420,
     "had_beta": 0,
     "price_usd": 70,
-    "proba_disappointment": 0.9148,
+    "proba_disappointment": 0.9059,
     "risk_level": "ALTO",
     "prediction": "\u26a0\ufe0f Riesgo de decepci\u00f3n"
   },
@@ -165,7 +165,7 @@
     "marketing_days": 360,
     "had_beta": 0,
     "price_usd": 50,
-    "proba_disappointment": 0.4164,
+    "proba_disappointment": 0.4053,
     "risk_level": "BAJO",
     "prediction": "\u2705 Probablemente bueno"
   }
