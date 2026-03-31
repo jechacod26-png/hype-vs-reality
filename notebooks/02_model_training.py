@@ -3,7 +3,7 @@ FASE 3 — Modelo Predictivo ML
 Entrena un Random Forest + Gradient Boosting para predecir
 si un juego va a decepcionar ANTES de su lanzamiento.
 """
-
+import os
 import pandas as pd
 import numpy as np
 import json
@@ -20,7 +20,8 @@ from sklearn.metrics import (
 from sklearn.pipeline import Pipeline
 from sklearn.inspection import permutation_importance
 
-df = pd.read_csv("/home/claude/hype_detector/data/games_engineered.csv")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+df = pd.read_csv(os.path.join(BASE_DIR, "data", "games_engineered.csv"))
 
 print("=" * 60)
 print("HYPE DETECTOR — Model Training")
@@ -164,7 +165,8 @@ model_data = {
     "train_auc": final_auc,
 }
 
-with open("/home/claude/hype_detector/models/hype_model.pkl", "wb") as f:
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+df = pd.read_csv(os.path.join(BASE_DIR, "data", "games_engineered.csv")) as f:
     pickle.dump(model_data, f)
 
 # Exportar resultados para el dashboard
@@ -188,7 +190,8 @@ model_results = {
     }
 }
 
-with open("/home/claude/hype_detector/data/model_results.json", "w") as f:
+with openBASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+df = pd.read_csv(os.path.join(BASE_DIR, "data", "games_engineered.csv")) as f:
     json.dump(model_results, f, indent=2)
 
 print("\n\n💾 Modelo guardado en models/hype_model.pkl")
