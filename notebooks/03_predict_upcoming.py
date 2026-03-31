@@ -10,7 +10,9 @@ import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 with open(os.path.join(BASE_DIR, "models", "hype_model.pkl"), "rb") as f:
-      json.dump(predictions_out, f, indent=2)
+    model_data = pickle.load(f)
+model    = model_data["model"]
+FEATURES = model_data["features"]
 
 model    = model_data["model"]
 FEATURES = model_data["features"]
@@ -269,7 +271,7 @@ predictions_out = df_up[[
 ]].to_dict("records")
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-with open(os.path.join(BASE_DIR, "models", "hype_model.pkl"), "rb") as f:
+with open(os.path.join(BASE_DIR, "data", "upcoming_predictions.json"), "w") as f:
     json.dump(predictions_out, f, indent=2)
 
 print("\n✅ Predicciones exportadas.")
