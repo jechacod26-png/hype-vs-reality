@@ -166,7 +166,7 @@ model_data = {
 }
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-df = pd.read_csv(os.path.join(BASE_DIR, "data", "games_engineered.csv")) as f:
+df = pd.read_csv(os.path.join(BASE_DIR, "data", "games_engineered.csv")) 
     pickle.dump(model_data, f)
 
 # Exportar resultados para el dashboard
