@@ -31,12 +31,9 @@ jobs:
       - name: Collect fresh data from APIs
         env:
           YOUTUBE_API_KEY:   ${{ secrets.YOUTUBE_API_KEY }}
-          REDDIT_CLIENT_ID:  ${{ secrets.REDDIT_CLIENT_ID }}
-          REDDIT_SECRET:     ${{ secrets.REDDIT_SECRET }}
-          REDDIT_USER_AGENT: "HypeDetector/1.0 by u/your_username"
         run: |
           echo "=== Recolectando datos frescos ==="
-          python api_collectors/collector.py --batch api_collectors/upcoming_games.json
+          python api_collectors/collector_real.py
           echo "=== Colección completada ==="
 
       # ─── Actualizar predicciones ──────────────────────────────
