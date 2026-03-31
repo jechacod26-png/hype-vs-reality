@@ -190,8 +190,8 @@ model_results = {
     }
 }
 
-with openBASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-df = pd.read_csv(os.path.join(BASE_DIR, "data", "games_engineered.csv")) as f:
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+with open(os.path.join(BASE_DIR, "data", "model_results.json"), "w") as f:
     json.dump(model_results, f, indent=2)
 
 print("\n\n💾 Modelo guardado en models/hype_model.pkl")
