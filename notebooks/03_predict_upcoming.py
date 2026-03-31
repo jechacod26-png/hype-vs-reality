@@ -2,14 +2,15 @@
 FASE 4 — Predictor de Juegos Futuros (2025-2026)
 Aplica el modelo a juegos próximos a lanzarse.
 """
-
+import os
 import pandas as pd
 import numpy as np
 import pickle
 import json
 
-with open("/home/claude/hype_detector/models/hype_model.pkl", "rb") as f:
-    model_data = pickle.load(f)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+with open(os.path.join(BASE_DIR, "models", "hype_model.pkl"), "rb") as f:
+      json.dump(predictions_out, f, indent=2)
 
 model    = model_data["model"]
 FEATURES = model_data["features"]
@@ -267,7 +268,8 @@ predictions_out = df_up[[
     "proba_disappointment", "risk_level", "prediction"
 ]].to_dict("records")
 
-with open("/home/claude/hype_detector/data/upcoming_predictions.json", "w") as f:
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+with open(os.path.join(BASE_DIR, "models", "hype_model.pkl"), "rb") as f:
     json.dump(predictions_out, f, indent=2)
 
 print("\n✅ Predicciones exportadas.")
