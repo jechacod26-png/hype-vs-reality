@@ -1,0 +1,12 @@
+[
+  {"name": "GTA VI",                 "steam_app_id": null,    "release_year": 2025},
+  {"name": "Monster Hunter Wilds",   "steam_app_id": 2246340, "release_year": 2025},
+  {"name": "Death Stranding 2",      "steam_app_id": null,    "release_year": 2025},
+  {"name": "Borderlands 4",          "steam_app_id": null,    "release_year": 2025},
+  {"name": "Ghost of Yotei",         "steam_app_id": null,    "release_year": 2025},
+  {"name": "Metroid Prime 4",        "steam_app_id": null,    "release_year": 2025},
+  {"name": "Fable",                  "steam_app_id": null,    "release_year": 2025},
+  {"name": "Hollow Knight Silksong", "steam_app_id": 1030300, "release_year": 2025},
+  {"name": "Doom The Dark Ages",     "steam_app_id": null,    "release_year": 2025},
+  {"name": "Mafia The Old Country",  "steam_app_id": null,    "release_year": 2025}
+]

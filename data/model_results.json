@@ -1,0 +1,735 @@
+{
+  "model_name": "Logistic Regression",
+  "cv_results": {
+    "Logistic Regression": {
+      "auc_mean": 0.816,
+      "auc_std": 0.0396,
+      "f1_mean": 0.6038,
+      "acc_mean": 0.7389
+    },
+    "Random Forest": {
+      "auc_mean": 0.7586,
+      "auc_std": 0.0442,
+      "f1_mean": 0.4305,
+      "acc_mean": 0.7
+    },
+    "Gradient Boosting": {
+      "auc_mean": 0.7119,
+      "auc_std": 0.0493,
+      "f1_mean": 0.4236,
+      "acc_mean": 0.7278
+    }
+  },
+  "feature_importance": {
+    "price_usd": 0.1453,
+    "hype_vs_genre_avg": 0.1197,
+    "marketing_days": 0.117,
+    "genre_avg_delta": 0.0745,
+    "reddit_sentiment_pre": 0.0743,
+    "google_trends_peak": 0.0633,
+    "years_ago": 0.0507,
+    "press_coverage_score": 0.0494,
+    "reddit_mentions_k": 0.048,
+    "dev_track_record": 0.0437,
+    "hype_sentiment_gap": 0.043,
+    "had_beta": 0.0298,
+    "wishlist_per_day": 0.0278,
+    "trailer_views_m": 0.0224,
+    "is_premium": 0.0214,
+    "is_aaa": 0.0214,
+    "marketing_intensity": 0.0187,
+    "like_ratio": 0.0171,
+    "steam_wishlist_k": 0.007,
+    "hype_score": 0.0054
+  },
+  "confusion_matrix": [
+    [
+      99,
+      29
+    ],
+    [
+      10,
+      42
+    ]
+  ],
+  "train_auc": 0.8708,
+  "real_game_predictions": [
+    {
+      "name": "Cyberpunk 2077",
+      "year": 2020,
+      "hype_score": 9.8,
+      "review_score_combined": 5.94,
+      "delta": 3.86,
+      "label": "launch_disaster",
+      "proba_disappointment": 0.8427,
+      "publisher_tier": "AAA",
+      "genre": "RPG"
+    },
+    {
+      "name": "No Man's Sky",
+      "year": 2016,
+      "hype_score": 9.5,
+      "review_score_combined": 5.7,
+      "delta": 3.8,
+      "label": "launch_disaster",
+      "proba_disappointment": 0.6816,
+      "publisher_tier": "AA",
+      "genre": "Adventure"
+    },
+    {
+      "name": "Anthem",
+      "year": 2019,
+      "hype_score": 8.2,
+      "review_score_combined": 4.81,
+      "delta": 3.39,
+      "label": "launch_disaster",
+      "proba_disappointment": 0.7132,
+      "publisher_tier": "AAA",
+      "genre": "Action"
+    },
+    {
+      "name": "Fallout 76",
+      "year": 2018,
+      "hype_score": 7.8,
+      "review_score_combined": 4.99,
+      "delta": 2.81,
+      "label": "launch_disaster",
+      "proba_disappointment": 0.4437,
+      "publisher_tier": "AAA",
+      "genre": "RPG"
+    },
+    {
+      "name": "Battlefield 2042",
+      "year": 2021,
+      "hype_score": 7.5,
+      "review_score_combined": 4.5,
+      "delta": 3.0,
+      "label": "launch_disaster",
+      "proba_disappointment": 0.8805,
+      "publisher_tier": "AAA",
+      "genre": "Shooter"
+    },
+    {
+      "name": "Halo Infinite",
+      "year": 2021,
+      "hype_score": 8.8,
+      "review_score_combined": 7.57,
+      "delta": 1.23,
+      "label": "disappointment",
+      "proba_disappointment": 0.9272,
+      "publisher_tier": "AAA",
+      "genre": "Shooter"
+    },
+    {
+      "name": "Mass Effect Andromeda",
+      "year": 2017,
+      "hype_score": 8.5,
+      "review_score_combined": 6.31,
+      "delta": 2.19,
+      "label": "launch_disaster",
+      "proba_disappointment": 0.8333,
+      "publisher_tier": "AAA",
+      "genre": "RPG"
+    },
+    {
+      "name": "Redfall",
+      "year": 2023,
+      "hype_score": 6.8,
+      "review_score_combined": 3.94,
+      "delta": 2.86,
+      "label": "launch_disaster",
+      "proba_disappointment": 0.6822,
+      "publisher_tier": "AAA",
+      "genre": "Shooter"
+    },
+    {
+      "name": "Forspoken",
+      "year": 2023,
+      "hype_score": 6.2,
+      "review_score_combined": 5.94,
+      "delta": 0.26,
+      "label": "met_expectations",
+      "proba_disappointment": 0.4175,
+      "publisher_tier": "AAA",
+      "genre": "Action"
+    },
+    {
+      "name": "Skull and Bones",
+      "year": 2024,
+      "hype_score": 6.5,
+      "review_score_combined": 5.29,
+      "delta": 1.21,
+      "label": "disappointment",
+      "proba_disappointment": 0.4099,
+      "publisher_tier": "AAA",
+      "genre": "Action"
+    },
+    {
+      "name": "Suicide Squad",
+      "year": 2024,
+      "hype_score": 6.0,
+      "review_score_combined": 4.69,
+      "delta": 1.31,
+      "label": "disappointment",
+      "proba_disappointment": 0.4612,
+      "publisher_tier": "AAA",
+      "genre": "Action"
+    },
+    {
+      "name": "The Day Before",
+      "year": 2023,
+      "hype_score": 8.9,
+      "review_score_combined": 1.68,
+      "delta": 7.22,
+      "label": "launch_disaster",
+      "proba_disappointment": 0.9968,
+      "publisher_tier": "AA",
+      "genre": "Survival"
+    },
+    {
+      "name": "Elden Ring",
+      "year": 2022,
+      "hype_score": 8.1,
+      "review_score_combined": 9.48,
+      "delta": -1.38,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.3536,
+      "publisher_tier": "AA",
+      "genre": "RPG"
+    },
+    {
+      "name": "God of War Ragnarok",
+      "year": 2022,
+      "hype_score": 8.9,
+      "review_score_combined": 9.43,
+      "delta": -0.53,
+      "label": "met_expectations",
+      "proba_disappointment": 0.7601,
+      "publisher_tier": "AAA",
+      "genre": "Action"
+    },
+    {
+      "name": "Baldur's Gate 3",
+      "year": 2023,
+      "hype_score": 7.8,
+      "review_score_combined": 9.63,
+      "delta": -1.83,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.1725,
+      "publisher_tier": "AA",
+      "genre": "RPG"
+    },
+    {
+      "name": "Hollow Knight",
+      "year": 2017,
+      "hype_score": 5.2,
+      "review_score_combined": 9.15,
+      "delta": -3.95,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.0183,
+      "publisher_tier": "Indie",
+      "genre": "Platformer"
+    },
+    {
+      "name": "Hades",
+      "year": 2020,
+      "hype_score": 6.8,
+      "review_score_combined": 9.39,
+      "delta": -2.59,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.1992,
+      "publisher_tier": "Indie",
+      "genre": "Roguelike"
+    },
+    {
+      "name": "Sekiro",
+      "year": 2019,
+      "hype_score": 7.9,
+      "review_score_combined": 8.94,
+      "delta": -1.04,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.5443,
+      "publisher_tier": "AA",
+      "genre": "Action"
+    },
+    {
+      "name": "Red Dead Redemption 2",
+      "year": 2018,
+      "hype_score": 9.5,
+      "review_score_combined": 9.43,
+      "delta": 0.07,
+      "label": "met_expectations",
+      "proba_disappointment": 0.5406,
+      "publisher_tier": "AAA",
+      "genre": "Action"
+    },
+    {
+      "name": "The Witcher 3",
+      "year": 2015,
+      "hype_score": 9.2,
+      "review_score_combined": 9.32,
+      "delta": -0.12,
+      "label": "met_expectations",
+      "proba_disappointment": 0.3601,
+      "publisher_tier": "AA",
+      "genre": "RPG"
+    },
+    {
+      "name": "Dark Souls 3",
+      "year": 2016,
+      "hype_score": 8.0,
+      "review_score_combined": 8.84,
+      "delta": -0.84,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.436,
+      "publisher_tier": "AA",
+      "genre": "Action"
+    },
+    {
+      "name": "Monster Hunter World",
+      "year": 2018,
+      "hype_score": 7.5,
+      "review_score_combined": 9.03,
+      "delta": -1.53,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.5578,
+      "publisher_tier": "AA",
+      "genre": "RPG"
+    },
+    {
+      "name": "Deep Rock Galactic",
+      "year": 2020,
+      "hype_score": 5.1,
+      "review_score_combined": 8.83,
+      "delta": -3.73,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.0177,
+      "publisher_tier": "Indie",
+      "genre": "Shooter"
+    },
+    {
+      "name": "Stardew Valley",
+      "year": 2016,
+      "hype_score": 5.8,
+      "review_score_combined": 9.17,
+      "delta": -3.37,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.2835,
+      "publisher_tier": "Indie",
+      "genre": "Simulation"
+    },
+    {
+      "name": "Disco Elysium",
+      "year": 2019,
+      "hype_score": 6.5,
+      "review_score_combined": 9.55,
+      "delta": -3.05,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.1074,
+      "publisher_tier": "Indie",
+      "genre": "RPG"
+    },
+    {
+      "name": "Outer Wilds",
+      "year": 2019,
+      "hype_score": 5.5,
+      "review_score_combined": 9.12,
+      "delta": -3.62,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.0872,
+      "publisher_tier": "Indie",
+      "genre": "Adventure"
+    },
+    {
+      "name": "Celeste",
+      "year": 2018,
+      "hype_score": 6.2,
+      "review_score_combined": 9.49,
+      "delta": -3.29,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.2331,
+      "publisher_tier": "Indie",
+      "genre": "Platformer"
+    },
+    {
+      "name": "Returnal",
+      "year": 2021,
+      "hype_score": 7.2,
+      "review_score_combined": 8.48,
+      "delta": -1.28,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.5091,
+      "publisher_tier": "AA",
+      "genre": "Roguelike"
+    },
+    {
+      "name": "It Takes Two",
+      "year": 2021,
+      "hype_score": 6.8,
+      "review_score_combined": 9.15,
+      "delta": -2.35,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.1554,
+      "publisher_tier": "AA",
+      "genre": "Platformer"
+    },
+    {
+      "name": "Ghostwire Tokyo",
+      "year": 2022,
+      "hype_score": 7.0,
+      "review_score_combined": 7.29,
+      "delta": -0.29,
+      "label": "met_expectations",
+      "proba_disappointment": 0.085,
+      "publisher_tier": "AA",
+      "genre": "Action"
+    },
+    {
+      "name": "Deathloop",
+      "year": 2021,
+      "hype_score": 7.8,
+      "review_score_combined": 8.32,
+      "delta": -0.52,
+      "label": "met_expectations",
+      "proba_disappointment": 0.3763,
+      "publisher_tier": "AA",
+      "genre": "Shooter"
+    },
+    {
+      "name": "Sifu",
+      "year": 2022,
+      "hype_score": 6.5,
+      "review_score_combined": 8.16,
+      "delta": -1.66,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.1434,
+      "publisher_tier": "Indie",
+      "genre": "Action"
+    },
+    {
+      "name": "Marvel's Spider-Man 2",
+      "year": 2023,
+      "hype_score": 9.1,
+      "review_score_combined": 9.06,
+      "delta": 0.04,
+      "label": "met_expectations",
+      "proba_disappointment": 0.2513,
+      "publisher_tier": "AAA",
+      "genre": "Action"
+    },
+    {
+      "name": "Alan Wake 2",
+      "year": 2023,
+      "hype_score": 7.5,
+      "review_score_combined": 8.78,
+      "delta": -1.28,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.3447,
+      "publisher_tier": "AA",
+      "genre": "Horror"
+    },
+    {
+      "name": "Dave the Diver",
+      "year": 2023,
+      "hype_score": 6.0,
+      "review_score_combined": 9.15,
+      "delta": -3.15,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.0282,
+      "publisher_tier": "Indie",
+      "genre": "Adventure"
+    },
+    {
+      "name": "Lies of P",
+      "year": 2023,
+      "hype_score": 6.8,
+      "review_score_combined": 8.06,
+      "delta": -1.26,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.2146,
+      "publisher_tier": "AA",
+      "genre": "Action"
+    },
+    {
+      "name": "Hi-Fi Rush",
+      "year": 2023,
+      "hype_score": 5.0,
+      "review_score_combined": 8.95,
+      "delta": -3.95,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.0494,
+      "publisher_tier": "AA",
+      "genre": "Action"
+    },
+    {
+      "name": "Overwatch 2",
+      "year": 2022,
+      "hype_score": 7.5,
+      "review_score_combined": 5.39,
+      "delta": 2.11,
+      "label": "launch_disaster",
+      "proba_disappointment": 0.4109,
+      "publisher_tier": "AAA",
+      "genre": "Shooter"
+    },
+    {
+      "name": "Diablo IV",
+      "year": 2023,
+      "hype_score": 9.0,
+      "review_score_combined": 8.5,
+      "delta": 0.5,
+      "label": "met_expectations",
+      "proba_disappointment": 0.7037,
+      "publisher_tier": "AAA",
+      "genre": "RPG"
+    },
+    {
+      "name": "Destiny 2",
+      "year": 2017,
+      "hype_score": 7.8,
+      "review_score_combined": 7.27,
+      "delta": 0.53,
+      "label": "met_expectations",
+      "proba_disappointment": 0.6743,
+      "publisher_tier": "AAA",
+      "genre": "Shooter"
+    },
+    {
+      "name": "Apex Legends",
+      "year": 2019,
+      "hype_score": 6.0,
+      "review_score_combined": 8.66,
+      "delta": -2.66,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.3257,
+      "publisher_tier": "AAA",
+      "genre": "Shooter"
+    },
+    {
+      "name": "Valorant",
+      "year": 2020,
+      "hype_score": 7.2,
+      "review_score_combined": 7.97,
+      "delta": -0.77,
+      "label": "met_expectations",
+      "proba_disappointment": 0.1929,
+      "publisher_tier": "AAA",
+      "genre": "Shooter"
+    },
+    {
+      "name": "Fortnite",
+      "year": 2017,
+      "hype_score": 6.5,
+      "review_score_combined": 8.01,
+      "delta": -1.51,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.152,
+      "publisher_tier": "AAA",
+      "genre": "Battle"
+    },
+    {
+      "name": "Lost Ark",
+      "year": 2022,
+      "hype_score": 7.0,
+      "review_score_combined": 7.04,
+      "delta": -0.04,
+      "label": "met_expectations",
+      "proba_disappointment": 0.3181,
+      "publisher_tier": "AA",
+      "genre": "RPG"
+    },
+    {
+      "name": "New World",
+      "year": 2021,
+      "hype_score": 7.8,
+      "review_score_combined": 5.97,
+      "delta": 1.83,
+      "label": "launch_disaster",
+      "proba_disappointment": 0.5736,
+      "publisher_tier": "AAA",
+      "genre": "RPG"
+    },
+    {
+      "name": "Babylon's Fall",
+      "year": 2022,
+      "hype_score": 6.5,
+      "review_score_combined": 3.76,
+      "delta": 2.74,
+      "label": "launch_disaster",
+      "proba_disappointment": 0.3317,
+      "publisher_tier": "AAA",
+      "genre": "Action"
+    },
+    {
+      "name": "GTA V",
+      "year": 2013,
+      "hype_score": 9.7,
+      "review_score_combined": 9.13,
+      "delta": 0.57,
+      "label": "met_expectations",
+      "proba_disappointment": 0.3689,
+      "publisher_tier": "AAA",
+      "genre": "Action"
+    },
+    {
+      "name": "Starfield",
+      "year": 2023,
+      "hype_score": 9.2,
+      "review_score_combined": 7.36,
+      "delta": 1.84,
+      "label": "launch_disaster",
+      "proba_disappointment": 0.9259,
+      "publisher_tier": "AAA",
+      "genre": "RPG"
+    },
+    {
+      "name": "Hogwarts Legacy",
+      "year": 2023,
+      "hype_score": 8.5,
+      "review_score_combined": 8.43,
+      "delta": 0.07,
+      "label": "met_expectations",
+      "proba_disappointment": 0.4209,
+      "publisher_tier": "AAA",
+      "genre": "RPG"
+    },
+    {
+      "name": "Armored Core VI",
+      "year": 2023,
+      "hype_score": 7.2,
+      "review_score_combined": 8.86,
+      "delta": -1.66,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.2922,
+      "publisher_tier": "AA",
+      "genre": "Action"
+    },
+    {
+      "name": "Street Fighter 6",
+      "year": 2023,
+      "hype_score": 7.8,
+      "review_score_combined": 9.17,
+      "delta": -1.37,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.2983,
+      "publisher_tier": "AAA",
+      "genre": "Fighting"
+    },
+    {
+      "name": "Mortal Kombat 1",
+      "year": 2023,
+      "hype_score": 7.5,
+      "review_score_combined": 8.08,
+      "delta": -0.58,
+      "label": "met_expectations",
+      "proba_disappointment": 0.2404,
+      "publisher_tier": "AAA",
+      "genre": "Fighting"
+    },
+    {
+      "name": "Resident Evil 4 Remake",
+      "year": 2023,
+      "hype_score": 8.0,
+      "review_score_combined": 9.33,
+      "delta": -1.33,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.8341,
+      "publisher_tier": "AAA",
+      "genre": "Horror"
+    },
+    {
+      "name": "Final Fantasy XVI",
+      "year": 2023,
+      "hype_score": 8.8,
+      "review_score_combined": 8.73,
+      "delta": 0.07,
+      "label": "met_expectations",
+      "proba_disappointment": 0.2823,
+      "publisher_tier": "AAA",
+      "genre": "RPG"
+    },
+    {
+      "name": "Final Fantasy VII Rebirth",
+      "year": 2024,
+      "hype_score": 8.5,
+      "review_score_combined": 9.08,
+      "delta": -0.58,
+      "label": "met_expectations",
+      "proba_disappointment": 0.2262,
+      "publisher_tier": "AAA",
+      "genre": "RPG"
+    },
+    {
+      "name": "Helldivers 2",
+      "year": 2024,
+      "hype_score": 5.8,
+      "review_score_combined": 8.41,
+      "delta": -2.61,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.0214,
+      "publisher_tier": "AA",
+      "genre": "Shooter"
+    },
+    {
+      "name": "Dragon's Dogma 2",
+      "year": 2024,
+      "hype_score": 8.2,
+      "review_score_combined": 7.76,
+      "delta": 0.44,
+      "label": "met_expectations",
+      "proba_disappointment": 0.059,
+      "publisher_tier": "AAA",
+      "genre": "RPG"
+    },
+    {
+      "name": "Prince of Persia Lost Crown",
+      "year": 2024,
+      "hype_score": 6.0,
+      "review_score_combined": 8.71,
+      "delta": -2.71,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.0493,
+      "publisher_tier": "AA",
+      "genre": "Platformer"
+    },
+    {
+      "name": "Tekken 8",
+      "year": 2024,
+      "hype_score": 8.0,
+      "review_score_combined": 8.97,
+      "delta": -0.97,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.2995,
+      "publisher_tier": "AAA",
+      "genre": "Fighting"
+    },
+    {
+      "name": "Granblue Fantasy Relink",
+      "year": 2024,
+      "hype_score": 6.5,
+      "review_score_combined": 8.45,
+      "delta": -1.95,
+      "label": "positive_surprise",
+      "proba_disappointment": 0.0714,
+      "publisher_tier": "AA",
+      "genre": "RPG"
+    }
+  ],
+  "all_model_scores": {
+    "Logistic Regression": {
+      "auc": 0.816,
+      "f1": 0.604,
+      "acc": 0.739
+    },
+    "Random Forest": {
+      "auc": 0.759,
+      "f1": 0.43,
+      "acc": 0.7
+    },
+    "Gradient Boosting": {
+      "auc": 0.712,
+      "f1": 0.424,
+      "acc": 0.728
+    }
+  }
+}

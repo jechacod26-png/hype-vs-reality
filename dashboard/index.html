@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hype vs Reality — Video Game Disappointment Detector</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0f0f13;
+    --bg2: #16161e;
+    --bg3: #1e1e2a;
+    --border: rgba(255,255,255,0.08);
+    --text: #e8e8f0;
+    --muted: #888899;
+    --purple: #9f8fff;
+    --purple-dim: #6c5fc7;
+    --amber: #f0a442;
+    --teal: #42d9a8;
+    --coral: #f07060;
+    --blue: #5aa8f0;
+    --green: #6abf69;
+    --red: #e05555;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; line-height: 1.6; }
+
+  /* Layout */
+  header { padding: 2rem 2.5rem 1.5rem; border-bottom: 1px solid var(--border); }
+  .header-top { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .logo { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+  .logo span { color: var(--purple); }
+  .subtitle { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .header-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { background: var(--bg3); border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px; font-size: 12px; color: var(--muted); }
+  .badge strong { color: var(--text); }
+
+  nav { display: flex; gap: 2px; padding: 0 2.5rem; border-bottom: 1px solid var(--border); overflow-x: auto; }
+  .tab { padding: 10px 18px; font-size: 13px; cursor: pointer; border-bottom: 2px solid transparent; color: var(--muted); white-space: nowrap; transition: all .15s; }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--purple); border-bottom-color: var(--purple); }
+
+  main { padding: 2rem 2.5rem; max-width: 1200px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* Metric cards */
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 2rem; }
+  .metric { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; }
+  .metric-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-size: 28px; font-weight: 700; }
+  .metric-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* Grid 2-col */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  @media (max-width: 768px) { .grid2 { grid-template-columns: 1fr; } }
+
+  /* Cards */
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; }
+  .card-title { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem; }
+
+  /* Chart containers */
+  .chart-wrap { position: relative; width: 100%; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px 12px; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  tr:hover td { background: rgba(159,143,255,0.04); }
+  tr:last-child td { border-bottom: none; }
+
+  /* Labels */
+  .lbl { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+  .lbl-disaster { background: rgba(240,96,96,0.15); color: #f08080; }
+  .lbl-disappoint { background: rgba(240,164,66,0.15); color: var(--amber); }
+  .lbl-met { background: rgba(90,168,240,0.12); color: var(--blue); }
+  .lbl-surprise { background: rgba(66,217,168,0.12); color: var(--teal); }
+  .lbl-aaa { background: rgba(159,143,255,0.12); color: var(--purple); }
+  .lbl-aa  { background: rgba(90,168,240,0.10); color: var(--blue); }
+  .lbl-indie { background: rgba(106,191,105,0.12); color: var(--green); }
+
+  /* Risk badges */
+  .risk-alto { background: rgba(224,85,85,0.15); color: #f08080; }
+  .risk-moderado { background: rgba(240,164,66,0.15); color: var(--amber); }
+  .risk-bajo { background: rgba(90,168,240,0.12); color: var(--blue); }
+  .risk-muybajo { background: rgba(66,217,168,0.12); color: var(--teal); }
+
+  /* Delta bar */
+  .delta-cell { display: flex; align-items: center; gap: 6px; }
+  .delta-bar { height: 6px; border-radius: 3px; }
+
+  /* Progress bars for features */
+  .feat-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .feat-label { min-width: 180px; font-size: 12px; color: var(--muted); }
+  .feat-bar-bg { flex: 1; height: 6px; background: var(--bg3); border-radius: 3px; }
+  .feat-bar { height: 6px; border-radius: 3px; background: var(--purple); }
+  .feat-val { min-width: 42px; font-size: 12px; font-family: monospace; text-align: right; color: var(--text); }
+
+  /* Model comparison */
+  .model-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .model-row:last-child { border-bottom: none; }
+  .model-name { min-width: 180px; font-size: 13px; }
+  .model-bars { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+  .model-bar-row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+  .mbar-bg { flex: 1; height: 4px; background: var(--bg3); border-radius: 2px; }
+  .mbar { height: 4px; border-radius: 2px; }
+
+  /* Upcoming predictor */
+  .pred-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 10px; display: flex; align-items: center; gap: 16px; }
+  .pred-name { flex: 1; font-weight: 600; font-size: 14px; }
+  .pred-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .pred-hype { text-align: center; min-width: 60px; }
+  .pred-hype-val { font-size: 22px; font-weight: 700; }
+  .pred-hype-label { font-size: 10px; color: var(--muted); }
+  .proba-bar-wrap { flex: 1; max-width: 200px; }
+  .proba-bar-bg { height: 8px; background: var(--bg3); border-radius: 4px; margin-bottom: 4px; }
+  .proba-bar-fill { height: 8px; border-radius: 4px; transition: width .5s; }
+  .proba-pct { font-size: 12px; color: var(--muted); }
+
+  /* Scatter tooltip */
+  .tooltip { position: absolute; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 12px; pointer-events: none; opacity: 0; transition: opacity .15s; z-index: 100; white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div>
+      <div class="logo">Hype <span>vs</span> Reality</div>
+      <div class="subtitle">Video Game Disappointment Detector · Análisis de 180 juegos (2013–2024)</div>
+    </div>
+    <div class="header-badges">
+      <div class="badge"><strong>180</strong> juegos</div>
+      <div class="badge">AUC <strong>0.871</strong></div>
+      <div class="badge">2013–2024</div>
+      <div class="badge"><strong>10</strong> predicciones 2025</div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="tab active" onclick="showTab('overview')">Overview</div>
+  <div class="tab" onclick="showTab('rankings')">Rankings</div>
+  <div class="tab" onclick="showTab('scatter')">Hype vs Score</div>
+  <div class="tab" onclick="showTab('modelo')">Modelo ML</div>
+  <div class="tab" onclick="showTab('predictor')">Predictor 2025</div>
+</nav>
+
+<main>
+
+<!-- ─── OVERVIEW ─────────────────────────────────── -->
+<div class="section active" id="tab-overview">
+
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-label">Total juegos</div>
+      <div class="metric-value" style="color:var(--purple)">180</div>
+      <div class="metric-sub">60 reales documentados</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Decepciones</div>
+      <div class="metric-value" style="color:var(--coral)">52</div>
+      <div class="metric-sub">28.9% del total</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Sorpresas positivas</div>
+      <div class="metric-value" style="color:var(--teal)">77</div>
+      <div class="metric-sub">42.8% del total</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Delta promedio</div>
+      <div class="metric-value" style="color:var(--amber)">−0.27</div>
+      <div class="metric-sub">Ligeramente mejor de lo esperado</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Model AUC-ROC</div>
+      <div class="metric-value" style="color:var(--green)">0.871</div>
+      <div class="metric-sub">Logistic Regression</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Distribución de resultados</div>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="chartDist"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Delta promedio por tier</div>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="chartTier"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Delta promedio por género</div>
+      <div class="chart-wrap" style="height:260px">
+        <canvas id="chartGenre"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Evolución del delta promedio por año</div>
+      <div class="chart-wrap" style="height:260px">
+        <canvas id="chartYear"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── RANKINGS ──────────────────────────────────── -->
+<div class="section" id="tab-rankings">
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">💥 Top decepciones (delta más alto)</div>
+      <table>
+        <thead><tr><th>Juego</th><th>Año</th><th>Hype</th><th>Score</th><th>Delta</th></tr></thead>
+        <tbody id="tbDecep"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">✨ Top sorpresas positivas (delta más bajo)</div>
+      <table>
+        <thead><tr><th>Juego</th><th>Año</th><th>Hype</th><th>Score</th><th>Delta</th></tr></thead>
+        <tbody id="tbSurp"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1.5rem">
+    <div class="card-title">Todos los juegos reales analizados</div>
+    <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap">
+      <select id="filterTier" onchange="renderAll()" style="background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px">
+        <option value="">Todos los tiers</option>
+        <option>AAA</option><option>AA</option><option>Indie</option>
+      </select>
+      <select id="filterLabel" onchange="renderAll()" style="background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px">
+        <option value="">Todos los resultados</option>
+        <option value="launch_disaster">Launch disaster</option>
+        <option value="disappointment">Disappointment</option>
+        <option value="met_expectations">Met expectations</option>
+        <option value="positive_surprise">Positive surprise</option>
+      </select>
+    </div>
+    <table>
+      <thead><tr><th>Juego</th><th>Año</th><th>Género</th><th>Tier</th><th>Hype</th><th>Metacritic</th><th>Steam</th><th>Delta</th><th>Resultado</th></tr></thead>
+      <tbody id="tbAll"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─── SCATTER ───────────────────────────────────── -->
+<div class="section" id="tab-scatter">
+  <div class="card">
+    <div class="card-title">Hype score vs Review score — cada punto es un juego</div>
+    <div class="chart-wrap" style="height:480px">
+      <canvas id="chartScatter"></canvas>
+    </div>
+    <div style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;font-size:12px;color:var(--muted)">
+      <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#f07060;display:inline-block"></span>Launch disaster</span>
+      <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#f0a442;display:inline-block"></span>Disappointment</span>
+      <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#5aa8f0;display:inline-block"></span>Met expectations</span>
+      <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#42d9a8;display:inline-block"></span>Positive surprise</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── MODELO ────────────────────────────────────── -->
+<div class="section" id="tab-modelo">
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Comparativa de modelos (5-fold CV)</div>
+      <div id="modelComparison"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Matriz de confusión (train)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:280px;margin:0 auto;padding-top:1rem">
+        <div style="background:rgba(66,217,168,0.1);border:1px solid rgba(66,217,168,0.3);border-radius:8px;padding:1rem;text-align:center">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:6px">VERDADERO NEGATIVO</div>
+          <div style="font-size:32px;font-weight:700;color:var(--teal)">99</div>
+        </div>
+        <div style="background:rgba(240,96,96,0.1);border:1px solid rgba(240,96,96,0.3);border-radius:8px;padding:1rem;text-align:center">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:6px">FALSO POSITIVO</div>
+          <div style="font-size:32px;font-weight:700;color:var(--coral)">29</div>
+        </div>
+        <div style="background:rgba(240,164,66,0.1);border:1px solid rgba(240,164,66,0.3);border-radius:8px;padding:1rem;text-align:center">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:6px">FALSO NEGATIVO</div>
+          <div style="font-size:32px;font-weight:700;color:var(--amber)">10</div>
+        </div>
+        <div style="background:rgba(159,143,255,0.1);border:1px solid rgba(159,143,255,0.3);border-radius:8px;padding:1rem;text-align:center">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:6px">VERDADERO POSITIVO</div>
+          <div style="font-size:32px;font-weight:700;color:var(--purple)">42</div>
+        </div>
+      </div>
+      <div style="margin-top:1rem;padding:10px;background:var(--bg3);border-radius:8px;font-size:12px;color:var(--muted)">
+        Precision: <strong style="color:var(--text)">59%</strong> · Recall: <strong style="color:var(--text)">81%</strong> · F1: <strong style="color:var(--text)">0.68</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1.5rem">
+    <div class="card-title">Importancia de features (top 15)</div>
+    <div id="featImportance"></div>
+  </div>
+</div>
+
+<!-- ─── PREDICTOR 2025 ────────────────────────────── -->
+<div class="section" id="tab-predictor">
+  <div style="background:rgba(159,143,255,0.06);border:1px solid rgba(159,143,255,0.2);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:13px;color:var(--muted)">
+    <strong style="color:var(--purple)">Predicciones en vivo · 2025</strong> — El modelo entrenado en datos históricos aplica sus reglas a los juegos que aún no han salido. La probabilidad indica el riesgo de decepcionar según las métricas actuales de pre-lanzamiento.
+  </div>
+  <div id="upcomingCards"></div>
+</div>
+
+</main>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────
+const labelColors = {
+  launch_disaster: '#f07060',
+  disappointment:  '#f0a442',
+  met_expectations:'#5aa8f0',
+  positive_surprise:'#42d9a8',
+};
+
+const stats = {
+  label_counts: {"positive_surprise":77,"met_expectations":51,"launch_disaster":38,"disappointment":14},
+  tier_avg_delta: {"AAA":0.68,"AA":-0.58,"Indie":-1.71},
+  genre_avg_delta: {"Roguelike":-1.5,"Platformer":-1.2,"Simulation":-0.8,"Adventure":-0.6,"Strategy":-0.5,"Horror":-0.3,"Action":-0.1,"Fighting":0.0,"Sports":0.2,"Shooter":0.5,"RPG":0.1,"Battle":-0.3},
+  year_avg_delta: {"2013":-0.1,"2015":-0.2,"2016":-0.8,"2017":0.5,"2018":0.2,"2019":-0.4,"2020":0.9,"2021":0.7,"2022":0.3,"2023":0.5,"2024":-0.1},
+};
+
+const topDisappointments = [
+  {name:"The Day Before",year:2023,hype_score:8.9,review_score_combined:1.68,delta:7.22,publisher_tier:"AA",label:"launch_disaster"},
+  {name:"Cyberpunk 2077",year:2020,hype_score:9.8,review_score_combined:5.94,delta:3.86,publisher_tier:"AAA",label:"launch_disaster"},
+  {name:"No Man's Sky",year:2016,hype_score:9.5,review_score_combined:5.70,delta:3.80,publisher_tier:"AA",label:"launch_disaster"},
+  {name:"Anthem",year:2019,hype_score:8.2,review_score_combined:4.81,delta:3.39,publisher_tier:"AAA",label:"launch_disaster"},
+  {name:"Battlefield 2042",year:2021,hype_score:7.5,review_score_combined:4.50,delta:3.00,publisher_tier:"AAA",label:"launch_disaster"},
+  {name:"Redfall",year:2023,hype_score:6.8,review_score_combined:3.94,delta:2.86,publisher_tier:"AAA",label:"launch_disaster"},
+  {name:"Fallout 76",year:2018,hype_score:7.8,review_score_combined:4.99,delta:2.81,publisher_tier:"AAA",label:"launch_disaster"},
+  {name:"Babylon's Fall",year:2022,hype_score:6.5,review_score_combined:3.76,delta:2.74,publisher_tier:"AAA",label:"launch_disaster"},
+  {name:"Mass Effect Andromeda",year:2017,hype_score:8.5,review_score_combined:6.31,delta:2.19,publisher_tier:"AAA",label:"launch_disaster"},
+  {name:"Overwatch 2",year:2022,hype_score:7.5,review_score_combined:5.39,delta:2.11,publisher_tier:"AAA",label:"disappointment"},
+];
+const topSurprises = [
+  {name:"Hollow Knight",year:2017,hype_score:5.2,review_score_combined:9.15,delta:-3.95,publisher_tier:"Indie",label:"positive_surprise"},
+  {name:"Hi-Fi Rush",year:2023,hype_score:5.0,review_score_combined:8.95,delta:-3.95,publisher_tier:"AA",label:"positive_surprise"},
+  {name:"Deep Rock Galactic",year:2020,hype_score:5.1,review_score_combined:8.83,delta:-3.73,publisher_tier:"Indie",label:"positive_surprise"},
+  {name:"Outer Wilds",year:2019,hype_score:5.5,review_score_combined:9.12,delta:-3.62,publisher_tier:"Indie",label:"positive_surprise"},
+  {name:"Stardew Valley",year:2016,hype_score:5.8,review_score_combined:9.17,delta:-3.37,publisher_tier:"Indie",label:"positive_surprise"},
+  {name:"Celeste",year:2018,hype_score:6.2,review_score_combined:9.49,delta:-3.29,publisher_tier:"Indie",label:"positive_surprise"},
+  {name:"Dave the Diver",year:2023,hype_score:6.0,review_score_combined:9.15,delta:-3.15,publisher_tier:"Indie",label:"positive_surprise"},
+  {name:"Disco Elysium",year:2019,hype_score:6.5,review_score_combined:9.55,delta:-3.05,publisher_tier:"Indie",label:"positive_surprise"},
+  {name:"Prince of Persia Lost Crown",year:2024,hype_score:6.0,review_score_combined:8.71,delta:-2.71,publisher_tier:"AA",label:"positive_surprise"},
+  {name:"Apex Legends",year:2019,hype_score:6.0,review_score_combined:8.66,delta:-2.66,publisher_tier:"AAA",label:"positive_surprise"},
+];
+const allGames = [
+  {name:"Cyberpunk 2077",year:2020,genre:"RPG",publisher_tier:"AAA",hype_score:9.8,metacritic_score:5.4,steam_score:7.2,review_score_combined:5.94,delta:3.86,label:"launch_disaster"},
+  {name:"No Man's Sky",year:2016,genre:"Adventure",publisher_tier:"AA",hype_score:9.5,metacritic_score:4.8,steam_score:7.8,review_score_combined:5.7,delta:3.8,label:"launch_disaster"},
+  {name:"Anthem",year:2019,genre:"Action",publisher_tier:"AAA",hype_score:8.2,metacritic_score:5.5,steam_score:3.2,review_score_combined:4.81,delta:3.39,label:"launch_disaster"},
+  {name:"Fallout 76",year:2018,genre:"RPG",publisher_tier:"AAA",hype_score:7.8,metacritic_score:5.2,steam_score:4.5,review_score_combined:4.99,delta:2.81,label:"launch_disaster"},
+  {name:"Battlefield 2042",year:2021,genre:"Shooter",publisher_tier:"AAA",hype_score:7.5,metacritic_score:4.8,steam_score:3.8,review_score_combined:4.5,delta:3.0,label:"launch_disaster"},
+  {name:"Halo Infinite",year:2021,genre:"Shooter",publisher_tier:"AAA",hype_score:8.8,metacritic_score:7.6,steam_score:7.5,review_score_combined:7.57,delta:1.23,label:"disappointment"},
+  {name:"Mass Effect Andromeda",year:2017,genre:"RPG",publisher_tier:"AAA",hype_score:8.5,metacritic_score:6.1,steam_score:6.8,review_score_combined:6.31,delta:2.19,label:"launch_disaster"},
+  {name:"Redfall",year:2023,genre:"Shooter",publisher_tier:"AAA",hype_score:6.8,metacritic_score:4.3,steam_score:3.1,review_score_combined:3.94,delta:2.86,label:"launch_disaster"},
+  {name:"The Day Before",year:2023,genre:"Survival",publisher_tier:"AA",hype_score:8.9,metacritic_score:1.8,steam_score:1.4,review_score_combined:1.68,delta:7.22,label:"launch_disaster"},
+  {name:"Elden Ring",year:2022,genre:"RPG",publisher_tier:"AA",hype_score:8.1,metacritic_score:9.6,steam_score:9.2,review_score_combined:9.18,delta:-1.08,label:"positive_surprise"},
+  {name:"Baldur's Gate 3",year:2023,genre:"RPG",publisher_tier:"AA",hype_score:7.8,metacritic_score:9.6,steam_score:9.7,review_score_combined:9.63,delta:-1.83,label:"positive_surprise"},
+  {name:"Hollow Knight",year:2017,genre:"Platformer",publisher_tier:"Indie",hype_score:5.2,metacritic_score:9.0,steam_score:9.5,review_score_combined:9.15,delta:-3.95,label:"positive_surprise"},
+  {name:"Hades",year:2020,genre:"Roguelike",publisher_tier:"Indie",hype_score:6.8,metacritic_score:9.3,steam_score:9.6,review_score_combined:9.39,delta:-2.59,label:"positive_surprise"},
+  {name:"Sekiro",year:2019,genre:"Action",publisher_tier:"AA",hype_score:7.9,metacritic_score:9.0,steam_score:8.8,review_score_combined:8.94,delta:-1.04,label:"positive_surprise"},
+  {name:"Red Dead Redemption 2",year:2018,genre:"Action",publisher_tier:"AAA",hype_score:9.5,metacritic_score:9.7,steam_score:8.8,review_score_combined:9.43,delta:0.07,label:"met_expectations"},
+  {name:"The Witcher 3",year:2015,genre:"RPG",publisher_tier:"AA",hype_score:9.2,metacritic_score:9.2,steam_score:9.6,review_score_combined:9.32,delta:-0.12,label:"met_expectations"},
+  {name:"Monster Hunter World",year:2018,genre:"RPG",publisher_tier:"AA",hype_score:7.5,metacritic_score:9.0,steam_score:9.1,review_score_combined:9.03,delta:-1.53,label:"positive_surprise"},
+  {name:"Stardew Valley",year:2016,genre:"Simulation",publisher_tier:"Indie",hype_score:5.8,metacritic_score:8.9,steam_score:9.8,review_score_combined:9.17,delta:-3.37,label:"positive_surprise"},
+  {name:"Disco Elysium",year:2019,genre:"RPG",publisher_tier:"Indie",hype_score:6.5,metacritic_score:9.7,steam_score:9.2,review_score_combined:9.55,delta:-3.05,label:"positive_surprise"},
+  {name:"Celeste",year:2018,genre:"Platformer",publisher_tier:"Indie",hype_score:6.2,metacritic_score:9.4,steam_score:9.7,review_score_combined:9.49,delta:-3.29,label:"positive_surprise"},
+  {name:"Helldivers 2",year:2024,genre:"Shooter",publisher_tier:"AA",hype_score:5.8,metacritic_score:8.2,steam_score:8.9,review_score_combined:8.41,delta:-2.61,label:"positive_surprise"},
+  {name:"Hi-Fi Rush",year:2023,genre:"Action",publisher_tier:"AA",hype_score:5.0,metacritic_score:8.8,steam_score:9.3,review_score_combined:9.0,delta:-4.0,label:"positive_surprise"},
+  {name:"Starfield",year:2023,genre:"RPG",publisher_tier:"AAA",hype_score:9.2,metacritic_score:7.6,steam_score:6.8,review_score_combined:7.36,delta:1.84,label:"launch_disaster"},
+  {name:"Hogwarts Legacy",year:2023,genre:"RPG",publisher_tier:"AAA",hype_score:8.5,metacritic_score:8.4,steam_score:8.5,review_score_combined:8.43,delta:0.07,label:"met_expectations"},
+  {name:"Diablo IV",year:2023,genre:"RPG",publisher_tier:"AAA",hype_score:9.0,metacritic_score:8.8,steam_score:7.8,review_score_combined:8.5,delta:0.5,label:"met_expectations"},
+  {name:"God of War Ragnarok",year:2022,genre:"Action",publisher_tier:"AAA",hype_score:8.9,metacritic_score:9.4,steam_score:9.5,review_score_combined:9.43,delta:-0.53,label:"met_expectations"},
+  {name:"Apex Legends",year:2019,genre:"Shooter",publisher_tier:"AAA",hype_score:6.0,metacritic_score:8.9,steam_score:8.1,review_score_combined:8.66,delta:-2.66,label:"positive_surprise"},
+  {name:"Deep Rock Galactic",year:2020,genre:"Shooter",publisher_tier:"Indie",hype_score:5.1,metacritic_score:8.5,steam_score:9.6,review_score_combined:8.83,delta:-3.73,label:"positive_surprise"},
+  {name:"Resident Evil 4 Remake",year:2023,genre:"Horror",publisher_tier:"AAA",hype_score:8.0,metacritic_score:9.3,steam_score:9.4,review_score_combined:9.33,delta:-1.33,label:"positive_surprise"},
+  {name:"Final Fantasy VII Rebirth",year:2024,genre:"RPG",publisher_tier:"AAA",hype_score:8.5,metacritic_score:9.2,steam_score:8.8,review_score_combined:9.08,delta:-0.58,label:"met_expectations"},
+];
+
+const featImportance = {
+  "price_usd":0.1453,"hype_vs_genre_avg":0.1197,"marketing_days":0.117,
+  "genre_avg_delta":0.0745,"reddit_sentiment_pre":0.0743,"google_trends_peak":0.0633,
+  "years_ago":0.0507,"press_coverage_score":0.0494,"reddit_mentions_k":0.048,
+  "dev_track_record":0.0437,"hype_sentiment_gap":0.043,"had_beta":0.0298,
+  "wishlist_per_day":0.0278,"trailer_views_m":0.0224,"is_premium":0.0214
+};
+
+const modelScores = {
+  "Logistic Regression": {auc:0.816,f1:0.604,acc:0.739},
+  "Random Forest": {auc:0.759,f1:0.43,acc:0.7},
+  "Gradient Boosting": {auc:0.712,f1:0.424,acc:0.728}
+};
+
+const upcoming = [
+  {name:"GTA VI",year:2025,genre:"Action",publisher_tier:"AAA",hype_score:9.9,proba_disappointment:0.7027,risk_level:"MODERADO",price_usd:70,steam_wishlist_k:1200},
+  {name:"Ghost of Yotei",year:2025,genre:"Action",publisher_tier:"AAA",hype_score:8.5,proba_disappointment:0.9520,risk_level:"ALTO",price_usd:70,steam_wishlist_k:0},
+  {name:"Doom: The Dark Ages",year:2025,genre:"Shooter",publisher_tier:"AAA",hype_score:8.2,proba_disappointment:0.8278,risk_level:"ALTO",price_usd:70,steam_wishlist_k:1100},
+  {name:"Monster Hunter Wilds",year:2025,genre:"RPG",publisher_tier:"AAA",hype_score:8.8,proba_disappointment:0.3530,risk_level:"BAJO",price_usd:60,steam_wishlist_k:3800},
+  {name:"Metroid Prime 4",year:2025,genre:"Action",publisher_tier:"AAA",hype_score:8.6,proba_disappointment:0.6555,risk_level:"MODERADO",price_usd:60,steam_wishlist_k:0},
+  {name:"Death Stranding 2",year:2025,genre:"Adventure",publisher_tier:"AA",hype_score:7.8,proba_disappointment:0.4550,risk_level:"BAJO",price_usd:70,steam_wishlist_k:950},
+  {name:"Borderlands 4",year:2025,genre:"Shooter",publisher_tier:"AAA",hype_score:7.2,proba_disappointment:0.7494,risk_level:"MODERADO",price_usd:70,steam_wishlist_k:820},
+  {name:"Fable (2025)",year:2025,genre:"RPG",publisher_tier:"AAA",hype_score:7.5,proba_disappointment:0.6223,risk_level:"MODERADO",price_usd:70,steam_wishlist_k:0},
+  {name:"Mafia: The Old Country",year:2025,genre:"Action",publisher_tier:"AA",hype_score:7.0,proba_disappointment:0.2758,risk_level:"MUY BAJO",price_usd:50,steam_wishlist_k:450},
+  {name:"Hollow Knight Silksong",year:2025,genre:"Platformer",publisher_tier:"Indie",hype_score:8.0,proba_disappointment:0.0002,risk_level:"MUY BAJO",price_usd:20,steam_wishlist_k:4200},
+];
+
+// ─── HELPERS ──────────────────────────────────────────────────
+function labelBadge(l) {
+  const map = {launch_disaster:"lbl-disaster",disappointment:"lbl-disappoint",met_expectations:"lbl-met",positive_surprise:"lbl-surprise"};
+  const names = {launch_disaster:"Launch disaster",disappointment:"Disappointment",met_expectations:"Met expectations",positive_surprise:"Positive surprise"};
+  return `<span class="lbl ${map[l]}">${names[l]||l}</span>`;
+}
+function tierBadge(t) {
+  const m = {AAA:"lbl-aaa",AA:"lbl-aa",Indie:"lbl-indie"};
+  return `<span class="lbl ${m[t]||''}">${t}</span>`;
+}
+function deltaCell(d) {
+  const abs = Math.abs(d), color = d > 0 ? '#f07060' : '#42d9a8', w = Math.min(abs*10,100);
+  return `<div class="delta-cell"><div class="delta-bar" style="width:${w}px;background:${color}"></div><span style="color:${color};font-weight:600">${d>0?'+':''}${d.toFixed(2)}</span></div>`;
+}
+function riskColor(r) {
+  return {ALTO:'risk-alto',MODERADO:'risk-moderado',BAJO:'risk-bajo','MUY BAJO':'risk-muybajo'}[r]||'';
+}
+function probaColor(p) {
+  if(p>=0.75) return '#f07060';
+  if(p>=0.5) return '#f0a442';
+  if(p>=0.3) return '#5aa8f0';
+  return '#42d9a8';
+}
+
+// ─── TAB NAVIGATION ───────────────────────────────────────────
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ─── OVERVIEW CHARTS ──────────────────────────────────────────
+function buildOverview() {
+  // Distribution donut
+  new Chart(document.getElementById('chartDist'), {
+    type:'doughnut',
+    data:{
+      labels:['Launch disaster','Disappointment','Met expectations','Positive surprise'],
+      datasets:[{data:[38,14,51,77],backgroundColor:['#f07060','#f0a442','#5aa8f0','#42d9a8'],borderWidth:0,hoverOffset:4}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false}}}
+  });
+
+  // Tier bar
+  new Chart(document.getElementById('chartTier'), {
+    type:'bar',
+    data:{
+      labels:['AAA','AA','Indie'],
+      datasets:[{label:'Delta promedio',data:[0.68,-0.58,-1.71],backgroundColor:['#9f8fff','#5aa8f0','#42d9a8'],borderRadius:6,borderWidth:0}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888899'}},
+        y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888899'},
+           title:{display:true,text:'Delta (hype − review)',color:'#888899',font:{size:11}}}
+      }
+    }
+  });
+
+  // Genre bar
+  const genres = Object.entries(stats.genre_avg_delta).sort((a,b)=>a[1]-b[1]);
+  new Chart(document.getElementById('chartGenre'), {
+    type:'bar',
+    data:{
+      labels:genres.map(g=>g[0]),
+      datasets:[{label:'Delta',data:genres.map(g=>g[1]),
+        backgroundColor:genres.map(g=>g[1]<0?'#42d9a8':'#f07060'),borderRadius:4,borderWidth:0}]
+    },
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888899'}},
+        y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{color:'#888899',font:{size:11}}}
+      }
+    }
+  });
+
+  // Year line
+  const years = Object.entries(stats.year_avg_delta).sort((a,b)=>+a[0]-+b[0]);
+  new Chart(document.getElementById('chartYear'), {
+    type:'line',
+    data:{
+      labels:years.map(y=>y[0]),
+      datasets:[{label:'Delta',data:years.map(y=>y[1]),borderColor:'#9f8fff',backgroundColor:'rgba(159,143,255,0.1)',tension:0.4,fill:true,pointBackgroundColor:'#9f8fff',pointRadius:4}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888899'}},
+        y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888899'}}
+      }
+    }
+  });
+}
+
+// ─── RANKINGS ─────────────────────────────────────────────────
+function buildRankings() {
+  const dec = document.getElementById('tbDecep');
+  topDisappointments.forEach(g => {
+    dec.innerHTML += `<tr><td>${g.name}</td><td>${g.year}</td><td>${g.hype_score.toFixed(1)}</td><td>${g.review_score_combined.toFixed(1)}</td><td>${deltaCell(g.delta)}</td></tr>`;
+  });
+  const sur = document.getElementById('tbSurp');
+  topSurprises.forEach(g => {
+    sur.innerHTML += `<tr><td>${g.name}</td><td>${g.year}</td><td>${g.hype_score.toFixed(1)}</td><td>${g.review_score_combined.toFixed(1)}</td><td>${deltaCell(g.delta)}</td></tr>`;
+  });
+  renderAll();
+}
+
+function renderAll() {
+  const tf = document.getElementById('filterTier').value;
+  const lf = document.getElementById('filterLabel').value;
+  const tb = document.getElementById('tbAll');
+  tb.innerHTML = '';
+  allGames.filter(g => (!tf || g.publisher_tier===tf) && (!lf || g.label===lf))
+    .sort((a,b)=>b.delta-a.delta)
+    .forEach(g => {
+      tb.innerHTML += `<tr>
+        <td>${g.name}</td><td>${g.year}</td><td>${g.genre}</td>
+        <td>${tierBadge(g.publisher_tier)}</td>
+        <td>${g.hype_score.toFixed(1)}</td>
+        <td>${g.metacritic_score.toFixed(1)}</td>
+        <td>${g.steam_score.toFixed(1)}</td>
+        <td>${deltaCell(g.delta)}</td>
+        <td>${labelBadge(g.label)}</td>
+      </tr>`;
+    });
+}
+
+// ─── SCATTER ──────────────────────────────────────────────────
+function buildScatter() {
+  const colorMap = {launch_disaster:'#f07060',disappointment:'#f0a442',met_expectations:'#5aa8f0',positive_surprise:'#42d9a8'};
+  const datasets = ['launch_disaster','disappointment','met_expectations','positive_surprise'].map(lbl => ({
+    label: lbl,
+    data: allGames.filter(g=>g.label===lbl).map(g=>({x:g.hype_score,y:g.review_score_combined,name:g.name})),
+    backgroundColor: colorMap[lbl]+'cc',
+    pointRadius: 7, pointHoverRadius: 9,
+  }));
+  // diagonal reference line
+  datasets.push({label:'_ref',data:[{x:1,y:1},{x:10,y:10}],type:'line',borderColor:'rgba(255,255,255,0.1)',borderDash:[4,4],pointRadius:0,borderWidth:1,backgroundColor:'transparent'});
+
+  new Chart(document.getElementById('chartScatter'), {
+    type:'scatter',
+    data:{datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>`${ctx.raw.name}: hype=${ctx.raw.x} review=${ctx.raw.y}`}}
+      },
+      scales:{
+        x:{min:1,max:10,title:{display:true,text:'Hype Score (pre-lanzamiento)',color:'#888899'},grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888899'}},
+        y:{min:1,max:10,title:{display:true,text:'Review Score (post-lanzamiento)',color:'#888899'},grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888899'}}
+      }
+    }
+  });
+}
+
+// ─── MODELO ───────────────────────────────────────────────────
+function buildModelo() {
+  const mc = document.getElementById('modelComparison');
+  Object.entries(modelScores).forEach(([name, s]) => {
+    mc.innerHTML += `<div class="model-row">
+      <div class="model-name">${name}</div>
+      <div class="model-bars">
+        <div class="model-bar-row">AUC<div class="mbar-bg"><div class="mbar" style="width:${s.auc*100}%;background:#9f8fff"></div></div>${s.auc}</div>
+        <div class="model-bar-row">F1 <div class="mbar-bg"><div class="mbar" style="width:${s.f1*100}%;background:#42d9a8"></div></div>${s.f1}</div>
+        <div class="model-bar-row">Acc<div class="mbar-bg"><div class="mbar" style="width:${s.acc*100}%;background:#5aa8f0"></div></div>${s.acc}</div>
+      </div>
+    </div>`;
+  });
+
+  const fi = document.getElementById('featImportance');
+  const maxImp = Math.max(...Object.values(featImportance));
+  Object.entries(featImportance).sort((a,b)=>b[1]-a[1]).slice(0,15).forEach(([feat,imp]) => {
+    fi.innerHTML += `<div class="feat-row">
+      <span class="feat-label">${feat.replace(/_/g,' ')}</span>
+      <div class="feat-bar-bg"><div class="feat-bar" style="width:${(imp/maxImp*100).toFixed(0)}%"></div></div>
+      <span class="feat-val">${(imp*100).toFixed(1)}%</span>
+    </div>`;
+  });
+}
+
+// ─── PREDICTOR ────────────────────────────────────────────────
+function buildPredictor() {
+  const cont = document.getElementById('upcomingCards');
+  upcoming.sort((a,b)=>b.proba_disappointment-a.proba_disappointment).forEach(g => {
+    const pct = Math.round(g.proba_disappointment*100);
+    const color = probaColor(g.proba_disappointment);
+    cont.innerHTML += `<div class="pred-card">
+      <div style="flex:1">
+        <div class="pred-name">${g.name}</div>
+        <div class="pred-meta">${g.year} · ${g.genre} · ${tierBadge(g.publisher_tier)}</div>
+      </div>
+      <div class="pred-hype">
+        <div class="pred-hype-val" style="color:${g.hype_score>=9?'#f07060':g.hype_score>=8?'#f0a442':'#9f8fff'}">${g.hype_score.toFixed(1)}</div>
+        <div class="pred-hype-label">Hype</div>
+      </div>
+      <div style="min-width:200px">
+        <div class="proba-bar-bg"><div class="proba-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+          <span class="proba-pct">${pct}% riesgo decepción</span>
+          <span class="lbl ${riskColor(g.risk_level)}">${g.risk_level}</span>
+        </div>
+      </div>
+    </div>`;
+  });
+}
+
+// ─── INIT ─────────────────────────────────────────────────────
+buildOverview();
+buildRankings();
+buildScatter();
+buildModelo();
+buildPredictor();
+</script>
+</body>
+</html>

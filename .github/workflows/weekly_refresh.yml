@@ -1,0 +1,93 @@
+name: Weekly Hype Data Refresh
+
+on:
+  schedule:
+    # Corre todos los lunes a las 08:00 UTC
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+    # También permite correrlo manualmente desde GitHub UI
+
+jobs:
+  collect-and-update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # ─── Setup ───────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      # ─── Recolección de datos ─────────────────────────────────
+      - name: Collect fresh data from APIs
+        env:
+          YOUTUBE_API_KEY:   ${{ secrets.YOUTUBE_API_KEY }}
+          REDDIT_CLIENT_ID:  ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_SECRET:     ${{ secrets.REDDIT_SECRET }}
+          REDDIT_USER_AGENT: "HypeDetector/1.0 by u/your_username"
+        run: |
+          echo "=== Recolectando datos frescos ==="
+          python api_collectors/collector.py --batch api_collectors/upcoming_games.json
+          echo "=== Colección completada ==="
+
+      # ─── Actualizar predicciones ──────────────────────────────
+      - name: Merge collected data with historical dataset
+        run: |
+          python notebooks/04_merge_real_data.py
+
+      - name: Retrain model with fresh data
+        run: |
+          python notebooks/02_model_training.py
+
+      - name: Generate updated predictions
+        run: |
+          python notebooks/03_predict_upcoming.py
+
+      # ─── Exportar para Streamlit ──────────────────────────────
+      - name: Export data for Streamlit dashboard
+        run: |
+          python notebooks/05_export_for_streamlit.py
+
+      # ─── Commit resultados ────────────────────────────────────
+      - name: Commit and push updated data
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/upcoming_predictions.json
+          git add data/model_results.json
+          git add data/games_engineered.csv
+          git add streamlit_app/data/
+          # Solo commitear si hay cambios
+          git diff --staged --quiet || git commit -m "chore: weekly data refresh $(date +%Y-%m-%d)"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+
+      # ─── Notificación (opcional) ──────────────────────────────
+      - name: Summary
+        run: |
+          echo "## Weekly Refresh Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Data collected and predictions updated for $(date +%Y-%m-%d)" >> $GITHUB_STEP_SUMMARY
+          python -c "
+          import json
+          with open('data/upcoming_predictions.json') as f:
+              preds = json.load(f)
+          print('| Game | Risk % | Level |')
+          print('|------|--------|-------|')
+          for p in sorted(preds, key=lambda x: x['proba_disappointment'], reverse=True):
+              pct = round(p['proba_disappointment']*100)
+              print(f\"| {p['name']} | {pct}% | {p['risk_level']} |\")
+          " >> $GITHUB_STEP_SUMMARY
