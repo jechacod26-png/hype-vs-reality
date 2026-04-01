@@ -1,3 +1,4 @@
+# v5 - interpretabilidad + validacion temporal
 import streamlit as st, pandas as pd, numpy as np, json, os
 from datetime import datetime
 
