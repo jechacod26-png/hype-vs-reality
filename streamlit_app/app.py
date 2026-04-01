@@ -269,7 +269,7 @@ with t4:
     with col1:
         st.markdown("**Comparativa de modelos (CV en train + test temporal)**")
         mdf=pd.DataFrame(mr["all_model_scores"]).T.reset_index()
-        mdf.columns=["Modelo","AUC CV","F1 CV","Acc CV","AUC Temporal","F1 Temporal"]
+        mdf.columns=["Modelo"] + list(mdf.columns[1:])
         st.dataframe(mdf,use_container_width=True,hide_index=True,
             column_config={
                 "AUC CV": st.column_config.ProgressColumn("AUC CV",min_value=0,max_value=1,format="%.3f"),
