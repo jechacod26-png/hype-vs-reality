@@ -174,11 +174,11 @@ except: PX=False
 st.markdown('<div style="padding:1.5rem 0 0.5rem"><span style="font-size:28px;font-weight:700;color:#e8e8f0">Hype <span style="color:#9f8fff">vs</span> Reality</span><span style="margin-left:12px;font-size:14px;color:#888899">Video Game Disappointment Detector</span></div>', unsafe_allow_html=True)
 
 c1,c2,c3,c4,c5 = st.columns(5)
-for col,num,lbl,clr in zip([c1,c2,c3,c4,c5],[
+for col,(num,lbl,clr) in zip([c1,c2,c3,c4,c5],[
     ("180","Juegos","#9f8fff"),("52","Decepciones","#f07060"),
     ("77","Sorpresas","#42d9a8"),(str(md["auc_temporal"]),"AUC temporal","#6abf69"),
-    (str(threshold)[:5],"Threshold óptimo","#f0a442")]):
-    col.markdown(f'<div class="mc"><div class="mn" style="color:{num[2]}">{num[0]}</div><div class="ml">{num[1]}</div></div>', unsafe_allow_html=True)
+    (str(threshold)[:5],"Threshold optimo","#f0a442")]):
+    col.markdown(f'<div class="mc"><div class="mn" style="color:{clr}">{num}</div><div class="ml">{lbl}</div></div>', unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 t1,t2,t3,t4,t5 = st.tabs(["📊 Overview","🏆 Rankings","🔍 Explorador","🤖 Modelo ML","🔮 Predictor 2025"])
