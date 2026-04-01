@@ -394,3 +394,5 @@ with t5:
 
 st.markdown("---")
 st.caption(f"Hype vs Reality · {datetime.now().strftime('%Y-%m-%d')} · AUC temporal {md['auc_temporal']} · Threshold {threshold:.3f} · Train 2013-2021 / Test 2022-2024")
+#   f o r c e   r e d e p l o y  
+ 
