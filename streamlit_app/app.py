@@ -1,4 +1,4 @@
-import streamlit as st, pandas as pd, numpy as np, json, os
+﻿import streamlit as st, pandas as pd, numpy as np, json, os
 from datetime import datetime
 
 st.set_page_config(page_title="Hype vs Reality", page_icon="🎮", layout="wide")
@@ -394,5 +394,4 @@ with t5:
 
 st.markdown("---")
 st.caption(f"Hype vs Reality · {datetime.now().strftime('%Y-%m-%d')} · AUC temporal {md['auc_temporal']} · Threshold {threshold:.3f} · Train 2013-2021 / Test 2022-2024")
-#   f o r c e   r e d e p l o y  
- 
+# force redeploy
