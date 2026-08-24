@@ -2,45 +2,45 @@
   "model_name": "Logistic Regression",
   "cv_results": {
     "Logistic Regression": {
-      "auc_mean": 0.8084,
-      "auc_std": 0.0701,
-      "f1_mean": 0.5943,
+      "auc_mean": 0.8106,
+      "auc_std": 0.0724,
+      "f1_mean": 0.5893,
       "acc_mean": 0.7368
     },
     "Random Forest": {
-      "auc_mean": 0.7597,
-      "auc_std": 0.0692,
-      "f1_mean": 0.5094,
-      "acc_mean": 0.6895
+      "auc_mean": 0.7695,
+      "auc_std": 0.0772,
+      "f1_mean": 0.5187,
+      "acc_mean": 0.7
     },
     "Gradient Boosting": {
-      "auc_mean": 0.7334,
-      "auc_std": 0.0654,
-      "f1_mean": 0.3532,
+      "auc_mean": 0.7231,
+      "auc_std": 0.0544,
+      "f1_mean": 0.3044,
       "acc_mean": 0.6947
     }
   },
   "feature_importance": {
-    "price_usd": 0.1523,
-    "marketing_days": 0.1182,
-    "hype_vs_genre_avg": 0.1067,
-    "genre_avg_delta": 0.0685,
-    "google_trends_peak": 0.0625,
-    "reddit_sentiment_pre": 0.06,
-    "years_ago": 0.0549,
-    "press_coverage_score": 0.0502,
-    "hype_sentiment_gap": 0.0474,
-    "dev_track_record": 0.0427,
-    "steam_wishlist_k": 0.0381,
-    "is_aaa": 0.0379,
-    "had_beta": 0.037,
-    "reddit_mentions_k": 0.0341,
-    "wishlist_per_day": 0.0336,
-    "like_ratio": 0.0185,
-    "hype_score": 0.0142,
-    "marketing_intensity": 0.012,
-    "is_premium": 0.0061,
-    "trailer_views_m": 0.0051
+    "price_usd": 0.1493,
+    "marketing_days": 0.1218,
+    "hype_vs_genre_avg": 0.11,
+    "genre_avg_delta": 0.0705,
+    "google_trends_peak": 0.0615,
+    "reddit_sentiment_pre": 0.0613,
+    "years_ago": 0.0553,
+    "hype_sentiment_gap": 0.05,
+    "press_coverage_score": 0.0466,
+    "dev_track_record": 0.0438,
+    "is_aaa": 0.0387,
+    "had_beta": 0.0366,
+    "reddit_mentions_k": 0.0363,
+    "wishlist_per_day": 0.0354,
+    "steam_wishlist_k": 0.029,
+    "like_ratio": 0.0271,
+    "hype_score": 0.016,
+    "marketing_intensity": 0.0055,
+    "is_premium": 0.0047,
+    "trailer_views_m": 0.0007
   },
   "confusion_matrix": [
     [
@@ -52,7 +52,7 @@
       41
     ]
   ],
-  "train_auc": 0.8779,
+  "train_auc": 0.877,
   "real_game_predictions": [
     {
       "name": "Cyberpunk 2077",
@@ -61,7 +61,7 @@
       "review_score_combined": 5.94,
       "delta": 3.86,
       "label": "launch_disaster",
-      "proba_disappointment": 0.9114,
+      "proba_disappointment": 0.9222,
       "publisher_tier": "AAA",
       "genre": "RPG"
     },
@@ -72,7 +72,7 @@
       "review_score_combined": 5.7,
       "delta": 3.8,
       "label": "launch_disaster",
-      "proba_disappointment": 0.7071,
+      "proba_disappointment": 0.7076,
       "publisher_tier": "AA",
       "genre": "Adventure"
     },
@@ -83,7 +83,7 @@
       "review_score_combined": 4.81,
       "delta": 3.39,
       "label": "launch_disaster",
-      "proba_disappointment": 0.6666,
+      "proba_disappointment": 0.6658,
       "publisher_tier": "AAA",
       "genre": "Action"
     },
@@ -94,7 +94,7 @@
       "review_score_combined": 4.99,
       "delta": 2.81,
       "label": "launch_disaster",
-      "proba_disappointment": 0.4663,
+      "proba_disappointment": 0.4585,
       "publisher_tier": "AAA",
       "genre": "RPG"
     },
@@ -105,7 +105,7 @@
       "review_score_combined": 4.5,
       "delta": 3.0,
       "label": "launch_disaster",
-      "proba_disappointment": 0.8776,
+      "proba_disappointment": 0.8751,
       "publisher_tier": "AAA",
       "genre": "Shooter"
     },
@@ -116,7 +116,7 @@
       "review_score_combined": 7.57,
       "delta": 1.23,
       "label": "disappointment",
-      "proba_disappointment": 0.9294,
+      "proba_disappointment": 0.9322,
       "publisher_tier": "AAA",
       "genre": "Shooter"
     },
@@ -127,7 +127,7 @@
       "review_score_combined": 6.31,
       "delta": 2.19,
       "label": "launch_disaster",
-      "proba_disappointment": 0.8216,
+      "proba_disappointment": 0.827,
       "publisher_tier": "AAA",
       "genre": "RPG"
     },
@@ -138,7 +138,7 @@
       "review_score_combined": 3.94,
       "delta": 2.86,
       "label": "launch_disaster",
-      "proba_disappointment": 0.6573,
+      "proba_disappointment": 0.6672,
       "publisher_tier": "AAA",
       "genre": "Shooter"
     },
@@ -149,7 +149,7 @@
       "review_score_combined": 5.94,
       "delta": 0.26,
       "label": "met_expectations",
-      "proba_disappointment": 0.4245,
+      "proba_disappointment": 0.4256,
       "publisher_tier": "AAA",
       "genre": "Action"
     },
@@ -160,7 +160,7 @@
       "review_score_combined": 5.29,
       "delta": 1.21,
       "label": "disappointment",
-      "proba_disappointment": 0.3712,
+      "proba_disappointment": 0.3797,
       "publisher_tier": "AAA",
       "genre": "Action"
     },
@@ -171,7 +171,7 @@
       "review_score_combined": 4.69,
       "delta": 1.31,
       "label": "disappointment",
-      "proba_disappointment": 0.4962,
+      "proba_disappointment": 0.4964,
       "publisher_tier": "AAA",
       "genre": "Action"
     },
@@ -182,7 +182,7 @@
       "review_score_combined": 1.68,
       "delta": 7.22,
       "label": "launch_disaster",
-      "proba_disappointment": 0.9982,
+      "proba_disappointment": 0.9984,
       "publisher_tier": "AA",
       "genre": "Survival"
     },
@@ -193,7 +193,7 @@
       "review_score_combined": 9.48,
       "delta": -1.38,
       "label": "positive_surprise",
-      "proba_disappointment": 0.3458,
+      "proba_disappointment": 0.341,
       "publisher_tier": "AA",
       "genre": "RPG"
     },
@@ -204,7 +204,7 @@
       "review_score_combined": 9.43,
       "delta": -0.53,
       "label": "met_expectations",
-      "proba_disappointment": 0.7219,
+      "proba_disappointment": 0.7264,
       "publisher_tier": "AAA",
       "genre": "Action"
     },
@@ -215,7 +215,7 @@
       "review_score_combined": 9.63,
       "delta": -1.83,
       "label": "positive_surprise",
-      "proba_disappointment": 0.1653,
+      "proba_disappointment": 0.1627,
       "publisher_tier": "AA",
       "genre": "RPG"
     },
@@ -226,7 +226,7 @@
       "review_score_combined": 9.15,
       "delta": -3.95,
       "label": "positive_surprise",
-      "proba_disappointment": 0.0211,
+      "proba_disappointment": 0.0213,
       "publisher_tier": "Indie",
       "genre": "Platformer"
     },
@@ -237,7 +237,7 @@
       "review_score_combined": 9.39,
       "delta": -2.59,
       "label": "positive_surprise",
-      "proba_disappointment": 0.1758,
+      "proba_disappointment": 0.1756,
       "publisher_tier": "Indie",
       "genre": "Roguelike"
     },
@@ -248,7 +248,7 @@
       "review_score_combined": 8.94,
       "delta": -1.04,
       "label": "positive_surprise",
-      "proba_disappointment": 0.5366,
+      "proba_disappointment": 0.5299,
       "publisher_tier": "AA",
       "genre": "Action"
     },
@@ -259,7 +259,7 @@
       "review_score_combined": 9.43,
       "delta": 0.07,
       "label": "met_expectations",
-      "proba_disappointment": 0.6107,
+      "proba_disappointment": 0.6358,
       "publisher_tier": "AAA",
       "genre": "Action"
     },
@@ -270,7 +270,7 @@
       "review_score_combined": 9.32,
       "delta": -0.12,
       "label": "met_expectations",
-      "proba_disappointment": 0.4945,
+      "proba_disappointment": 0.513,
       "publisher_tier": "AA",
       "genre": "RPG"
     },
@@ -281,7 +281,7 @@
       "review_score_combined": 8.84,
       "delta": -0.84,
       "label": "positive_surprise",
-      "proba_disappointment": 0.4327,
+      "proba_disappointment": 0.432,
       "publisher_tier": "AA",
       "genre": "Action"
     },
@@ -292,7 +292,7 @@
       "review_score_combined": 9.03,
       "delta": -1.53,
       "label": "positive_surprise",
-      "proba_disappointment": 0.5339,
+      "proba_disappointment": 0.5236,
       "publisher_tier": "AA",
       "genre": "RPG"
     },
@@ -314,7 +314,7 @@
       "review_score_combined": 9.17,
       "delta": -3.37,
       "label": "positive_surprise",
-      "proba_disappointment": 0.329,
+      "proba_disappointment": 0.332,
       "publisher_tier": "Indie",
       "genre": "Simulation"
     },
@@ -325,7 +325,7 @@
       "review_score_combined": 9.55,
       "delta": -3.05,
       "label": "positive_surprise",
-      "proba_disappointment": 0.1032,
+      "proba_disappointment": 0.1017,
       "publisher_tier": "Indie",
       "genre": "RPG"
     },
@@ -336,7 +336,7 @@
       "review_score_combined": 9.12,
       "delta": -3.62,
       "label": "positive_surprise",
-      "proba_disappointment": 0.0898,
+      "proba_disappointment": 0.0914,
       "publisher_tier": "Indie",
       "genre": "Adventure"
     },
@@ -347,7 +347,7 @@
       "review_score_combined": 9.49,
       "delta": -3.29,
       "label": "positive_surprise",
-      "proba_disappointment": 0.2696,
+      "proba_disappointment": 0.2667,
       "publisher_tier": "Indie",
       "genre": "Platformer"
     },
@@ -358,7 +358,7 @@
       "review_score_combined": 8.48,
       "delta": -1.28,
       "label": "positive_surprise",
-      "proba_disappointment": 0.444,
+      "proba_disappointment": 0.4474,
       "publisher_tier": "AA",
       "genre": "Roguelike"
     },
@@ -369,7 +369,7 @@
       "review_score_combined": 9.15,
       "delta": -2.35,
       "label": "positive_surprise",
-      "proba_disappointment": 0.1724,
+      "proba_disappointment": 0.1666,
       "publisher_tier": "AA",
       "genre": "Platformer"
     },
@@ -380,7 +380,7 @@
       "review_score_combined": 7.29,
       "delta": -0.29,
       "label": "met_expectations",
-      "proba_disappointment": 0.071,
+      "proba_disappointment": 0.0724,
       "publisher_tier": "AA",
       "genre": "Action"
     },
@@ -391,7 +391,7 @@
       "review_score_combined": 8.32,
       "delta": -0.52,
       "label": "met_expectations",
-      "proba_disappointment": 0.3607,
+      "proba_disappointment": 0.3603,
       "publisher_tier": "AA",
       "genre": "Shooter"
     },
@@ -402,7 +402,7 @@
       "review_score_combined": 8.16,
       "delta": -1.66,
       "label": "positive_surprise",
-      "proba_disappointment": 0.1537,
+      "proba_disappointment": 0.15,
       "publisher_tier": "Indie",
       "genre": "Action"
     },
@@ -413,7 +413,7 @@
       "review_score_combined": 9.06,
       "delta": 0.04,
       "label": "met_expectations",
-      "proba_disappointment": 0.2765,
+      "proba_disappointment": 0.2926,
       "publisher_tier": "AAA",
       "genre": "Action"
     },
@@ -424,7 +424,7 @@
       "review_score_combined": 8.78,
       "delta": -1.28,
       "label": "positive_surprise",
-      "proba_disappointment": 0.4092,
+      "proba_disappointment": 0.4065,
       "publisher_tier": "AA",
       "genre": "Horror"
     },
@@ -435,7 +435,7 @@
       "review_score_combined": 9.15,
       "delta": -3.15,
       "label": "positive_surprise",
-      "proba_disappointment": 0.026,
+      "proba_disappointment": 0.0259,
       "publisher_tier": "Indie",
       "genre": "Adventure"
     },
@@ -446,7 +446,7 @@
       "review_score_combined": 8.06,
       "delta": -1.26,
       "label": "positive_surprise",
-      "proba_disappointment": 0.2012,
+      "proba_disappointment": 0.2025,
       "publisher_tier": "AA",
       "genre": "Action"
     },
@@ -457,7 +457,7 @@
       "review_score_combined": 8.95,
       "delta": -3.95,
       "label": "positive_surprise",
-      "proba_disappointment": 0.0528,
+      "proba_disappointment": 0.0547,
       "publisher_tier": "AA",
       "genre": "Action"
     },
@@ -468,7 +468,7 @@
       "review_score_combined": 5.39,
       "delta": 2.11,
       "label": "launch_disaster",
-      "proba_disappointment": 0.4445,
+      "proba_disappointment": 0.436,
       "publisher_tier": "AAA",
       "genre": "Shooter"
     },
@@ -479,7 +479,7 @@
       "review_score_combined": 8.5,
       "delta": 0.5,
       "label": "met_expectations",
-      "proba_disappointment": 0.7912,
+      "proba_disappointment": 0.8136,
       "publisher_tier": "AAA",
       "genre": "RPG"
     },
@@ -490,7 +490,7 @@
       "review_score_combined": 7.27,
       "delta": 0.53,
       "label": "met_expectations",
-      "proba_disappointment": 0.6274,
+      "proba_disappointment": 0.6293,
       "publisher_tier": "AAA",
       "genre": "Shooter"
     },
@@ -501,7 +501,7 @@
       "review_score_combined": 8.66,
       "delta": -2.66,
       "label": "positive_surprise",
-      "proba_disappointment": 0.3827,
+      "proba_disappointment": 0.3718,
       "publisher_tier": "AAA",
       "genre": "Shooter"
     },
@@ -512,7 +512,7 @@
       "review_score_combined": 7.97,
       "delta": -0.77,
       "label": "met_expectations",
-      "proba_disappointment": 0.2043,
+      "proba_disappointment": 0.1942,
       "publisher_tier": "AAA",
       "genre": "Shooter"
     },
@@ -523,7 +523,7 @@
       "review_score_combined": 8.01,
       "delta": -1.51,
       "label": "positive_surprise",
-      "proba_disappointment": 0.2018,
+      "proba_disappointment": 0.2004,
       "publisher_tier": "AAA",
       "genre": "Battle"
     },
@@ -534,7 +534,7 @@
       "review_score_combined": 7.04,
       "delta": -0.04,
       "label": "met_expectations",
-      "proba_disappointment": 0.2665,
+      "proba_disappointment": 0.2648,
       "publisher_tier": "AA",
       "genre": "RPG"
     },
@@ -545,7 +545,7 @@
       "review_score_combined": 5.97,
       "delta": 1.83,
       "label": "launch_disaster",
-      "proba_disappointment": 0.5777,
+      "proba_disappointment": 0.5755,
       "publisher_tier": "AAA",
       "genre": "RPG"
     },
@@ -556,7 +556,7 @@
       "review_score_combined": 3.76,
       "delta": 2.74,
       "label": "launch_disaster",
-      "proba_disappointment": 0.298,
+      "proba_disappointment": 0.301,
       "publisher_tier": "AAA",
       "genre": "Action"
     },
@@ -567,7 +567,7 @@
       "review_score_combined": 9.13,
       "delta": 0.57,
       "label": "met_expectations",
-      "proba_disappointment": 0.4741,
+      "proba_disappointment": 0.5067,
       "publisher_tier": "AAA",
       "genre": "Action"
     },
@@ -578,7 +578,7 @@
       "review_score_combined": 7.36,
       "delta": 1.84,
       "label": "launch_disaster",
-      "proba_disappointment": 0.9567,
+      "proba_disappointment": 0.9607,
       "publisher_tier": "AAA",
       "genre": "RPG"
     },
@@ -589,7 +589,7 @@
       "review_score_combined": 8.43,
       "delta": 0.07,
       "label": "met_expectations",
-      "proba_disappointment": 0.3953,
+      "proba_disappointment": 0.4025,
       "publisher_tier": "AAA",
       "genre": "RPG"
     },
@@ -600,7 +600,7 @@
       "review_score_combined": 8.86,
       "delta": -1.66,
       "label": "positive_surprise",
-      "proba_disappointment": 0.2698,
+      "proba_disappointment": 0.2712,
       "publisher_tier": "AA",
       "genre": "Action"
     },
@@ -611,7 +611,7 @@
       "review_score_combined": 9.17,
       "delta": -1.37,
       "label": "positive_surprise",
-      "proba_disappointment": 0.2878,
+      "proba_disappointment": 0.288,
       "publisher_tier": "AAA",
       "genre": "Fighting"
     },
@@ -622,7 +622,7 @@
       "review_score_combined": 8.08,
       "delta": -0.58,
       "label": "met_expectations",
-      "proba_disappointment": 0.2342,
+      "proba_disappointment": 0.2338,
       "publisher_tier": "AAA",
       "genre": "Fighting"
     },
@@ -633,7 +633,7 @@
       "review_score_combined": 9.33,
       "delta": -1.33,
       "label": "positive_surprise",
-      "proba_disappointment": 0.7981,
+      "proba_disappointment": 0.7992,
       "publisher_tier": "AAA",
       "genre": "Horror"
     },
@@ -644,7 +644,7 @@
       "review_score_combined": 8.73,
       "delta": 0.07,
       "label": "met_expectations",
-      "proba_disappointment": 0.3498,
+      "proba_disappointment": 0.3587,
       "publisher_tier": "AAA",
       "genre": "RPG"
     },
@@ -655,7 +655,7 @@
       "review_score_combined": 9.08,
       "delta": -0.58,
       "label": "met_expectations",
-      "proba_disappointment": 0.1985,
+      "proba_disappointment": 0.2051,
       "publisher_tier": "AAA",
       "genre": "RPG"
     },
@@ -666,7 +666,7 @@
       "review_score_combined": 8.41,
       "delta": -2.61,
       "label": "positive_surprise",
-      "proba_disappointment": 0.0177,
+      "proba_disappointment": 0.0187,
       "publisher_tier": "AA",
       "genre": "Shooter"
     },
@@ -677,7 +677,7 @@
       "review_score_combined": 7.76,
       "delta": 0.44,
       "label": "met_expectations",
-      "proba_disappointment": 0.0423,
+      "proba_disappointment": 0.041,
       "publisher_tier": "AAA",
       "genre": "RPG"
     },
@@ -688,7 +688,7 @@
       "review_score_combined": 8.71,
       "delta": -2.71,
       "label": "positive_surprise",
-      "proba_disappointment": 0.0526,
+      "proba_disappointment": 0.055,
       "publisher_tier": "AA",
       "genre": "Platformer"
     },
@@ -699,7 +699,7 @@
       "review_score_combined": 8.97,
       "delta": -0.97,
       "label": "positive_surprise",
-      "proba_disappointment": 0.2398,
+      "proba_disappointment": 0.2354,
       "publisher_tier": "AAA",
       "genre": "Fighting"
     },
@@ -710,18 +710,18 @@
       "review_score_combined": 8.45,
       "delta": -1.95,
       "label": "positive_surprise",
-      "proba_disappointment": 0.0632,
+      "proba_disappointment": 0.064,
       "publisher_tier": "AA",
       "genre": "RPG"
     },
     {
       "name": "Monster Hunter Wilds",
       "year": 2025,
-      "hype_score": 6.95,
+      "hype_score": 6.16,
       "review_score_combined": 0.0,
       "delta": 0.0,
       "label": "upcoming",
-      "proba_disappointment": 0.0135,
+      "proba_disappointment": 0.0088,
       "publisher_tier": "AAA",
       "genre": "RPG"
     },
@@ -732,18 +732,18 @@
       "review_score_combined": 0.0,
       "delta": 0.0,
       "label": "upcoming",
-      "proba_disappointment": 0.0488,
+      "proba_disappointment": 0.1003,
       "publisher_tier": "Indie",
       "genre": "Platformer"
     },
     {
       "name": "Doom The Dark Ages",
       "year": 2025,
-      "hype_score": 9.84,
+      "hype_score": 9.85,
       "review_score_combined": 0.0,
       "delta": 0.0,
       "label": "upcoming",
-      "proba_disappointment": 0.0058,
+      "proba_disappointment": 0.0072,
       "publisher_tier": "AAA",
       "genre": "Shooter"
     },
@@ -754,18 +754,18 @@
       "review_score_combined": 0.0,
       "delta": 0.0,
       "label": "upcoming",
-      "proba_disappointment": 0.1045,
+      "proba_disappointment": 0.054,
       "publisher_tier": "AAA",
       "genre": "Shooter"
     },
     {
       "name": "Ghost of Yotei",
       "year": 2025,
-      "hype_score": 8.43,
+      "hype_score": 8.44,
       "review_score_combined": 0.0,
       "delta": 0.0,
       "label": "upcoming",
-      "proba_disappointment": 0.129,
+      "proba_disappointment": 0.135,
       "publisher_tier": "AAA",
       "genre": "Action"
     },
@@ -776,69 +776,69 @@
       "review_score_combined": 0.0,
       "delta": 0.0,
       "label": "upcoming",
-      "proba_disappointment": 0.3508,
+      "proba_disappointment": 0.1775,
       "publisher_tier": "AAA",
       "genre": "Action"
     },
     {
       "name": "Death Stranding 2",
       "year": 2025,
-      "hype_score": 7.78,
+      "hype_score": 8.6,
       "review_score_combined": 0.0,
       "delta": 0.0,
       "label": "upcoming",
-      "proba_disappointment": 0.2149,
+      "proba_disappointment": 0.2317,
       "publisher_tier": "AA",
       "genre": "Adventure"
     },
     {
       "name": "Fable",
       "year": 2025,
-      "hype_score": 7.57,
+      "hype_score": 7.13,
       "review_score_combined": 0.0,
       "delta": 0.0,
       "label": "upcoming",
-      "proba_disappointment": 0.0379,
+      "proba_disappointment": 0.0174,
       "publisher_tier": "AAA",
       "genre": "RPG"
     },
     {
       "name": "Metroid Prime 4",
       "year": 2025,
-      "hype_score": 7.73,
+      "hype_score": 6.04,
       "review_score_combined": 0.0,
       "delta": 0.0,
       "label": "upcoming",
-      "proba_disappointment": 0.061,
+      "proba_disappointment": 0.0447,
       "publisher_tier": "AAA",
       "genre": "Action"
     },
     {
       "name": "Mafia The Old Country",
       "year": 2025,
-      "hype_score": 6.67,
+      "hype_score": 6.69,
       "review_score_combined": 0.0,
       "delta": 0.0,
       "label": "upcoming",
-      "proba_disappointment": 0.1346,
+      "proba_disappointment": 0.1063,
       "publisher_tier": "AA",
       "genre": "Action"
     }
   ],
   "all_model_scores": {
     "Logistic Regression": {
-      "auc": 0.808,
-      "f1": 0.594,
+      "auc": 0.811,
+      "f1": 0.589,
       "acc": 0.737
     },
     "Random Forest": {
-      "auc": 0.76,
-      "f1": 0.509,
-      "acc": 0.689
+      "auc": 0.769,
+      "f1": 0.519,
+      "acc": 0.7
     },
     "Gradient Boosting": {
-      "auc": 0.733,
-      "f1": 0.353,
+      "auc": 0.723,
+      "f1": 0.304,
       "acc": 0.695
     }
   }
