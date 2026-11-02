@@ -12,7 +12,7 @@
     "marketing_days": 730,
     "had_beta": 0,
     "price_usd": 70,
-    "proba_disappointment": 0.8857,
+    "proba_disappointment": 0.9202,
     "risk_level": "ALTO",
     "prediction": "\u26a0\ufe0f Riesgo de decepci\u00f3n"
   },
@@ -29,7 +29,7 @@
     "marketing_days": 540,
     "had_beta": 1,
     "price_usd": 60,
-    "proba_disappointment": 0.3673,
+    "proba_disappointment": 0.3892,
     "risk_level": "BAJO",
     "prediction": "\u2705 Probablemente bueno"
   },
@@ -46,7 +46,7 @@
     "marketing_days": 450,
     "had_beta": 0,
     "price_usd": 70,
-    "proba_disappointment": 0.5335,
+    "proba_disappointment": 0.5573,
     "risk_level": "MODERADO",
     "prediction": "\u26a0\ufe0f Riesgo de decepci\u00f3n"
   },
@@ -63,7 +63,7 @@
     "marketing_days": 360,
     "had_beta": 0,
     "price_usd": 70,
-    "proba_disappointment": 0.8445,
+    "proba_disappointment": 0.8435,
     "risk_level": "ALTO",
     "prediction": "\u26a0\ufe0f Riesgo de decepci\u00f3n"
   },
@@ -97,7 +97,7 @@
     "marketing_days": 480,
     "had_beta": 0,
     "price_usd": 60,
-    "proba_disappointment": 0.8748,
+    "proba_disappointment": 0.8724,
     "risk_level": "ALTO",
     "prediction": "\u26a0\ufe0f Riesgo de decepci\u00f3n"
   },
@@ -114,8 +114,8 @@
     "marketing_days": 540,
     "had_beta": 0,
     "price_usd": 70,
-    "proba_disappointment": 0.7583,
-    "risk_level": "ALTO",
+    "proba_disappointment": 0.7476,
+    "risk_level": "MODERADO",
     "prediction": "\u26a0\ufe0f Riesgo de decepci\u00f3n"
   },
   {
@@ -148,7 +148,7 @@
     "marketing_days": 420,
     "had_beta": 0,
     "price_usd": 70,
-    "proba_disappointment": 0.9192,
+    "proba_disappointment": 0.9193,
     "risk_level": "ALTO",
     "prediction": "\u26a0\ufe0f Riesgo de decepci\u00f3n"
   },
@@ -165,7 +165,7 @@
     "marketing_days": 360,
     "had_beta": 0,
     "price_usd": 50,
-    "proba_disappointment": 0.4339,
+    "proba_disappointment": 0.4263,
     "risk_level": "BAJO",
     "prediction": "\u2705 Probablemente bueno"
   }
